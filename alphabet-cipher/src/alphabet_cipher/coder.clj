@@ -7,12 +7,12 @@
 
 (defn alpha-pos
   "position of a letter in a seq" [letter seqnce]
-  (.indexOf seqnce letter))
+  (.indexOf seqnce (int letter)))
 
 (defn row-column [row-letter col-letter]
   [(alpha-pos row-letter alpha) (alpha-pos col-letter alpha)])
 
-(defn cipher-letter [row-letter col-letter]
+(defn cipher-letter [[row-letter col-letter]]
   (let [rc-pair (row-column row-letter col-letter)
         row (first rc-pair)
         column (second rc-pair)
@@ -26,12 +26,24 @@
 
 (defn map-secret-and-string
   [secret string]
-  (map str
+  (map #(conj [] %1 %2)
        (seq (clojure.string/upper-case string))
        (seq (clojure.string/upper-case secret))))
 
+(def rs
+  (match-secret-to-string "vietnam" "smellslikevictory"))
+
+(map-secret-and-string rs "smellslikevictory")
+
 (defn encode [keyword message]
-  "encodeme")
+  (let [repeating-secret (match-secret-to-string keyword message)
+        letter-pairs (map-secret-and-string repeating-secret message)]
+    (clojure.string/lower-case (apply str (map #(cipher-letter %) letter-pairs)))))
+
+;(encode "vietnam" "smellslikevictory")
+
+;(encode "vigilance" "meetmeontuesdayeveningatseven")
+;(encode "vietnam" "smellslikevictory")
 
 (defn decode [keyword message]
   "decodeme")

@@ -8,11 +8,11 @@
 
 (deftest test-alpha-pos
   (testing "can find the zero-indexed element in the sequence"
-    (is (= 2 (alpha-pos "C" "ARCTIC")))))
+    (is (= 2 (alpha-pos \C "ARCTIC")))))
 
 (deftest test-cipher-letter
   (testing "with two letters you can find the corresponding cipher letter"
-    (is (= "P" (cipher-letter "O" "B")))))
+    (is (= "P" (cipher-letter \O \B)))))
 
 (deftest test-match-secret-to-string
   (testing "secret is repeated whole or part to match string to be encoded"
