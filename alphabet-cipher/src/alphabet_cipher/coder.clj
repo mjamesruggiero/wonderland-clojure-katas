@@ -1,6 +1,6 @@
 (ns alphabet-cipher.coder)
 
-(def alpha "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+(def alpha "abcdefghijklmnopqrstuvwxyz")
 
 (defn rotate [n]
   (str (subs alpha n (count alpha)) (subs alpha 0 n)))
@@ -27,13 +27,13 @@
 (defn keyword-message->pairs
   [secret string]
   (map #(conj [] %1 %2)
-       (seq (clojure.string/upper-case string))
-       (seq (clojure.string/upper-case secret))))
+       (seq string)
+       (seq secret)))
 
 (defn encode [keyword message]
   (let [repeating-secret (match-keyword-length-to-message keyword message)
         letter-pairs (keyword-message->pairs repeating-secret message)]
-    (clojure.string/lower-case (apply str (map #(cipher-letter %) letter-pairs)))))
+    (apply str (map #(cipher-letter %) letter-pairs))))
 
 (defn find-row [chr]
   (let [row-number (alpha-pos chr alpha)]
@@ -49,6 +49,6 @@
 (defn decode [keyword message]
   (let [keyword-seq (match-keyword-length-to-message keyword message)
         pairs (map #(conj [] %1 %2)
-                (seq (clojure.string/upper-case keyword-seq))
-                (seq (clojure.string/upper-case message)))]
-    (clojure.string/lower-case (apply str (map #(decode-pair %) pairs)))))
+                (seq keyword-seq)
+                (seq message))]
+    (apply str (map #(decode-pair %) pairs))))

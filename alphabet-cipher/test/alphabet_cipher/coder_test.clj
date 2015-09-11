@@ -4,25 +4,25 @@
 
 (deftest test-rotate
   (testing "can rotate the alpha sequence"
-    (is (= "BCDEFGHIJKLMNOPQRSTUVWXYZA" (rotate 1)))))
+    (is (= "bcdefghijklmnopqrstuvwxyza" (rotate 1)))))
 
 (deftest test-alpha-pos
   (testing "can find the zero-indexed element in the sequence"
-    (is (= 2 (alpha-pos \C "ARCTIC")))))
+    (is (= 2 (alpha-pos \c "arctic")))))
 
 (deftest test-cipher-letter
   (testing "with two letters you can find the corresponding cipher letter"
-    (is (= "P" (cipher-letter [\O \B])))))
+    (is (= "p" (cipher-letter [\o \b])))))
 
 (deftest test-match-keyword-length-to-message
   (testing "secret is repeated whole or part to match string to be encoded"
     (is (= "vietnamvietnamvie" (match-keyword-length-to-message "vietnam" "smellslikevictory")))))
 
 (def expected-mapping
-  (seq [[ \S \V ] [ \M \I ] [ \E \E ] [ \L \T ]
-        [ \L \N ] [ \S \A ] [ \L \M ] [ \I \V ] [ \K \I ]
-        [ \E \E ] [ \V \T ] [ \I \N ] [ \C \A ] [ \T \M ]
-        [ \O \V ] [ \R \I ] [ \Y \E ]]))
+  (seq [[ \s \v ] [ \m \i ] [ \e \e ] [ \l \t ]
+        [ \l \n ] [ \s \a ] [ \l \m ] [ \i \v ] [ \k \i ]
+        [ \e \e ] [ \v \t ] [ \i \n ] [ \c \a ] [ \t \m ]
+        [ \o \v ] [ \r \i ] [ \y \e ]]))
 
 (def repeating
   (match-keyword-length-to-message "vietnam" "smellslikevictory"))
