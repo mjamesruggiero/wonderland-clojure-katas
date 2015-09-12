@@ -3,7 +3,7 @@
 (def alpha "abcdefghijklmnopqrstuvwxyz")
 
 (defn rotate [n]
-  (str (subs alpha n (count alpha)) (subs alpha 0 n)))
+  (apply str (concat (drop n alpha) (take n alpha))))
 
 (defn alpha-pos
   "position of a letter in a seq" [letter seqnce]
@@ -13,9 +13,7 @@
   [(alpha-pos row-letter alpha) (alpha-pos col-letter alpha)])
 
 (defn cipher-letter [[row-letter col-letter]]
-  (let [rc-pair (row-column row-letter col-letter)
-        row (first rc-pair)
-        column (second rc-pair)
+  (let [[row column] (row-column row-letter col-letter)
         rotated (subs (rotate row) column (+ column 1))]
    rotated))
 
@@ -29,8 +27,8 @@
        (seq secret)))
 
 (defn encode [keyword message]
-  (let [repeating-secret (match-keyword-length-to-message keyword message)
-        letter-pairs (keyword-message->pairs repeating-secret message)]
+  (let [lengthened-kw (match-keyword-length-to-message keyword message)
+        letter-pairs (keyword-message->pairs lengthened-kw message)]
     (apply str (map #(cipher-letter %) letter-pairs))))
 
 (defn find-row [chr]
