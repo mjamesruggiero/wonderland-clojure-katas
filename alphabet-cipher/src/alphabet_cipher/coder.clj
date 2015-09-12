@@ -19,10 +19,8 @@
         rotated (subs (rotate row) column (+ column 1))]
    rotated))
 
-(defn match-keyword-length-to-message [secret string]
-  (let [partsubs (subs secret 0 (mod (count string) (count secret)))
-        repeated (apply str (repeat (quot (count string) (count secret)) secret))]
-    (apply str repeated partsubs)))
+(defn match-keyword-length-to-message [kw message]
+    (apply str (take (count message) (apply concat (repeat kw)))))
 
 (defn keyword-message->pairs
   [secret string]
